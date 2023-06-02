@@ -1,0 +1,24 @@
+plugins {
+    id 'java'
+}
+
+group 'ru.intabia'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+
+    implementation "org.keycloak:keycloak-server-spi:16.1.1"
+    implementation "org.keycloak:keycloak-core:16.1.1"
+    implementation "org.keycloak:keycloak-server-spi-private:16.1.1"
+    implementation "org.keycloak:keycloak-services:16.1.1"
+}
+
+test {
+    useJUnitPlatform()
+}

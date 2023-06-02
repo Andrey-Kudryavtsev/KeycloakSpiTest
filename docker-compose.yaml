@@ -1,0 +1,46 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:14
+    container_name: kkst-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: kkst
+    volumes:
+      - postgres:/var/lib/postgresql/data
+      - ./src/main/resources/init-keycloak-schema.sql:/docker-entrypoint-initdb.d/init-keycloak-schema.sql
+    networks:
+      keycloak-spi-test:
+    ports:
+      - "5432:5432"
+
+  keycloak:
+    profiles:
+      - keycloak
+    image: jboss/keycloak:16.1.1
+    container_name: kkst-keycloak
+    restart: always
+    environment:
+      DB_VENDOR: POSTGRES
+      DB_ADDR: postgres
+      DB_SCHEMA: keycloak
+      DB_DATABASE: kkst
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      KEYCLOAK_USER: keycloak
+      KEYCLOAK_PASSWORD: keycloak
+    ports:
+      - "8080:8080"
+    networks:
+      keycloak-spi-test:
+    depends_on:
+      - postgres
+
+volumes:
+  postgres:
+
+networks:
+  keycloak-spi-test:
