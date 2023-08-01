@@ -1,4 +1,4 @@
-package ru.intabia.kkst;
+package ru.intabia.kkst.verificationcode;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;

@@ -1,4 +1,4 @@
-package ru.intabia.kkst;
+package ru.intabia.kkst.verificationcode;
 
 import java.io.IOException;
 import org.keycloak.credential.CredentialModel;

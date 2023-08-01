@@ -17,6 +17,17 @@ services:
     ports:
       - "5432:5432"
 
+  rproxy:
+    image: nginx:latest
+    container_name: nginx_rproxy
+    restart: unless-stopped
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - "80:80"
+    networks:
+      keycloak-spi-test:
+
   keycloak:
     profiles:
       - keycloak
@@ -32,8 +43,49 @@ services:
       DB_PASSWORD: postgres
       KEYCLOAK_USER: keycloak
       KEYCLOAK_PASSWORD: keycloak
+      PROXY_ADDRESS_FORWARDING: true
     ports:
       - "8080:8080"
+    networks:
+      keycloak-spi-test:
+    depends_on:
+      - postgres
+
+  keycloak2:
+    profiles:
+      - keycloak
+    image: jboss/keycloak:16.1.1
+    container_name: kkst-keycloak-2
+    restart: always
+    environment:
+      DB_VENDOR: POSTGRES
+      DB_ADDR: postgres
+      DB_SCHEMA: keycloak
+      DB_DATABASE: kkst
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      KEYCLOAK_USER: keycloak
+      KEYCLOAK_PASSWORD: keycloak
+      PROXY_ADDRESS_FORWARDING: true
+    ports:
+      - "8081:8080"
+    networks:
+      keycloak-spi-test:
+    depends_on:
+      - postgres
+
+  ldap:
+    image: osixia/openldap:1.5.0
+    container_name: kkst-ldap
+    restart: always
+#    environment:
+#      LDAP_ORGANISATION: myorg
+#      LDAP_DOMAIN: myorg.ru
+#      LDAP_BASE_DN: dc=myorg,dc=ru
+#      LDAP_ADMIN_PASSWORD: admin
+    ports:
+      - "389:389"
+      - "636:636"
     networks:
       keycloak-spi-test:
     depends_on:

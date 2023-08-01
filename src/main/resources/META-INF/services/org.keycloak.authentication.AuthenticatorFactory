@@ -1,1 +1,4 @@
-ru.intabia.kkst.VerificationCodeAuthenticatorFactory
+ru.intabia.kkst.verificationcode.VerificationCodeAuthenticatorFactory
+ru.intabia.kkst.login.CustomUsernamePasswordFormFactory
+ru.intabia.kkst.otp.CustomOTPFormAuthenticatorFactory
+ru.intabia.kkst.resetpassword.ResetCredentialChooseUserByPassport

@@ -1,4 +1,4 @@
-package ru.intabia.kkst;
+package ru.intabia.kkst.verificationcode;
 
 import org.keycloak.credential.CredentialProvider;
 import org.keycloak.credential.CredentialProviderFactory;

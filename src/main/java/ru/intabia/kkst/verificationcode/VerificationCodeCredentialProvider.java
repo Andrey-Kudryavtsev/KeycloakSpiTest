@@ -1,4 +1,4 @@
-package ru.intabia.kkst;
+package ru.intabia.kkst.verificationcode;
 
 import org.keycloak.common.util.Time;
 import org.keycloak.credential.CredentialInput;

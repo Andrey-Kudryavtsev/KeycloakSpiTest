@@ -1,9 +1,5 @@
-package ru.intabia.kkst;
+package ru.intabia.kkst.verificationcode;
 
-import java.net.HttpCookie;
-import java.net.URI;
-import java.net.http.HttpResponse;
-import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 import org.keycloak.authentication.AuthenticationFlowContext;
@@ -11,10 +7,8 @@ import org.keycloak.authentication.AuthenticationFlowError;
 import org.keycloak.authentication.Authenticator;
 import org.keycloak.authentication.CredentialValidator;
 import org.keycloak.credential.CredentialProvider;
-import org.keycloak.models.AuthenticatorConfigModel;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.RealmModel;
-import org.keycloak.models.UserCredentialModel;
 import org.keycloak.models.UserModel;
 
 public class VerificationCodeAuthenticator implements Authenticator,
@@ -39,11 +33,12 @@ public class VerificationCodeAuthenticator implements Authenticator,
 
   @Override
   public void setRequiredActions(KeycloakSession session, RealmModel realm, UserModel user) {
-    user.addRequiredAction("VERIFICATION_CODE_CONFIG");
+//    user.addRequiredAction("VERIFICATION_CODE_CONFIG");
   }
 
   @Override
   public void authenticate(AuthenticationFlowContext context) {
+    // send otp code?
     Response challenge = context.form()
         .createForm("verification-code.ftl");
     context.challenge(challenge);
@@ -65,6 +60,7 @@ public class VerificationCodeAuthenticator implements Authenticator,
   protected boolean validateAnswer(AuthenticationFlowContext context) {
     MultivaluedMap<String, String> formData = context.getHttpRequest().getDecodedFormParameters();
     String secret = formData.getFirst("verification_code");
+    // check otp code
     return TEST_CODE.equals(secret);
 //    String credentialId = formData.getFirst("credentialId");
 //    if (credentialId == null || credentialId.isEmpty()) {

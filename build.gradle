@@ -22,3 +22,11 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
+jar {
+    manifest {
+        attributes(
+                'Dependencies' : "org.keycloak.keycloak-services"
+        )
+    }
+}
