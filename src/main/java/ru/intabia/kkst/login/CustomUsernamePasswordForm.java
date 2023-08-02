@@ -56,6 +56,7 @@ public class CustomUsernamePasswordForm extends UsernamePasswordForm {
   private void validateUsernamePassword(AuthenticationFlowContext context,
                                         MultivaluedMap<String, String> formData) {
     String platformUserLogin = formData.getFirst(AuthenticationManager.FORM_USERNAME);
+    context.getAuthenticationSession().setAuthNote("platformUserLogin", platformUserLogin);
 
     Frame response = client.getUserById(platformUserLogin);
 
@@ -63,7 +64,6 @@ public class CustomUsernamePasswordForm extends UsernamePasswordForm {
         response.getBody() != null ? response.getBody() : objectMapper.createObjectNode();
 
     String adLogin = body.path("adlogin").asText();
-    context.getAuthenticationSession().setAuthNote("platformUserLogin", platformUserLogin);
 
     formData.putSingle(AuthenticationManager.FORM_USERNAME, adLogin);
     if (!validateForm(context, formData)) {

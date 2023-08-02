@@ -20,6 +20,7 @@ import org.keycloak.models.UserModel;
 import org.keycloak.models.utils.FormMessage;
 import ru.intabia.kkst.gatekeeper.Frame;
 import ru.intabia.kkst.gatekeeper.GatekeeperClient;
+import ru.intabia.kkst.gatekeeper.GatekeeperClientImpl;
 import ru.intabia.kkst.gatekeeper.GatekeeperClientMock;
 
 public class ResetCredentialChooseUserByPassport extends ResetCredentialChooseUser {
@@ -28,7 +29,7 @@ public class ResetCredentialChooseUserByPassport extends ResetCredentialChooseUs
   private static final String PROVIDER_ID = "reset-creds-choose-user-by-passport";
   private static final String DISPLAY_TYPE = "Choose user by passport";
   private static final String AUTH_SOURCE_PASSPORT = "2";
-  private static final GatekeeperClient client = new GatekeeperClientMock();
+  private static final GatekeeperClient client = new GatekeeperClientImpl();
 
   @Override
   public void authenticate(AuthenticationFlowContext context) {

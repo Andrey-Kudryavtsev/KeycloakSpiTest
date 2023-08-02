@@ -32,7 +32,7 @@ public class GatekeeperClientMock implements GatekeeperClient {
   }
 
   @Override
-  public Frame otpSign(String login, String phone) {
+  public Frame otpSign(String login, String phone, String firstName, String lastName, String middleName) {
     return null;
   }
 

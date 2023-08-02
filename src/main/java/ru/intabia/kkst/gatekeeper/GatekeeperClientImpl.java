@@ -7,6 +7,7 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.nio.ByteBuffer;
 import org.jboss.logging.Logger;
+import ru.intabia.kkst.AuthSource;
 
 public class GatekeeperClientImpl implements GatekeeperClient {
 
@@ -71,14 +72,16 @@ public class GatekeeperClientImpl implements GatekeeperClient {
     }
   }
 
-  public Frame otpSign(String login, String phone) {
+  public Frame otpSign(String login, String phone,
+                       String firstName, String lastName, String middleName) {
     try (Socket socket = new Socket(HOST, PORT);
          OutputStream out = socket.getOutputStream();
          InputStream in = socket.getInputStream()) {
 
       socket.setSoTimeout(TIMEOUT_MS);
       ByteBuffer request = RequestFactory.createOtpSignRequest(
-          socket.getLocalAddress().getHostAddress(), socket.getLocalPort(), login, phone);
+          socket.getLocalAddress().getHostAddress(), socket.getLocalPort(),
+          login, phone, AuthSource.LOGIN, firstName, lastName, middleName);
 
       out.write(request.array());
 
